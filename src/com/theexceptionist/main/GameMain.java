@@ -4,9 +4,14 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 
 import com.theexceptionist.assets.Assets;
+import com.theexceptionist.gameobject.Rug;
+import com.theexceptionist.gameobject.Table;
+import com.theexceptionist.gameobject.WoodTile;
 import com.theexceptionist.input.InputHandler;
 
 
@@ -23,9 +28,13 @@ public class GameMain extends Canvas implements Runnable{
 	
 	private int currentChoice = 0;
 	
+	private boolean gen = true;
+	
 	private InputHandler input = new InputHandler(this); 
 	private Handler h = new Handler();
 	private Assets a = new Assets();
+	
+	private Random r = new Random(System.nanoTime());
 	
 	private int tickCount = 0;
 	
@@ -140,11 +149,33 @@ public class GameMain extends Canvas implements Runnable{
 			
 		}
 		if(currentState == "Game"){
+			if(gen){
+				genLevel();
+				gen = false;
+			}
+			
 			h.tick();
 		}
 		if(currentState == "Help"){
 			
 		}
+	}
+
+	private void genLevel() {
+		for(int x = 0; x < width * scale; x += 30){
+			for(int y = 0; y < height * scale; y += 30){
+				h.addTile(new WoodTile(x, y, h));
+				
+				if(r.nextInt(100) <= 24){
+					if(r.nextInt(100) <= 49){
+						h.addObject(new Rug("Rug", x, y, 32, 32, h));
+					}else{
+						h.addObject(new Table("Table", x, y, 32, 32, h));
+					}
+				}
+			}
+		}
+		
 	}
 
 	public void render(){
@@ -178,6 +209,9 @@ public class GameMain extends Canvas implements Runnable{
 			
 		}
 		if(currentState == "Game"){
+			Graphics2D g2d = (Graphics2D) g;
+			
+			g2d.scale(3, 3);
 			h.render(g);
 		}
 		if(currentState == "Help"){
