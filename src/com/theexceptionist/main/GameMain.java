@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import com.theexceptionist.gamestate.GameStateManager;
+
 public class GameMain extends JPanel implements Runnable, KeyListener{
 	public static final int width = 400;
 	public static final int height = 500;
@@ -21,8 +23,11 @@ public class GameMain extends JPanel implements Runnable, KeyListener{
 	
 	private BufferedImage image;
 	private Graphics2D g;
+	
+	private GameStateManager gsm;
 		
 	private void init(){
+		gsm = new GameStateManager();
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		running = true;
@@ -94,18 +99,16 @@ public class GameMain extends JPanel implements Runnable, KeyListener{
 	}
 
 	private void update() {
-		// TODO Auto-generated method stub
-		
+		gsm.update();
 	}
 
 	private void draw() {
-		// TODO Auto-generated method stub
-		
+		gsm.draw(g);	
 	}
 
 	private void drawToScreen() {
 		Graphics g2 = getGraphics();
-		g.drawImage(image, width * scale, height * scale, null);
+		g2.drawImage(image, width * scale, height * scale, null);
 		g2.dispose();
 	}
 

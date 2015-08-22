@@ -1,6 +1,6 @@
 package com.theexceptionist.gamestate;
 
-import java.util.ArrayList;
+import java.awt.Graphics;
 
 public class GameStateManager {
 	private GameState[] gamestates;
@@ -38,5 +38,13 @@ public class GameStateManager {
 		unLoadState(currentState);
 		currentState = state;
 		loadState(currentState);
+	}
+	
+	public void update(){
+		if(gamestates[currentState] != null) gamestates[currentState].update();
+	}
+	
+	public void draw(Graphics g){
+		if(gamestates[currentState] != null) gamestates[currentState].draw(g);
 	}
 }
