@@ -30,7 +30,7 @@ public class Table extends GameObject{
 		if(type == 0){
 			g.drawImage(Assets.table1, x, y, null);	
 		}
-		if(type == 2){
+		if(type == 1){
 			g.drawImage(Assets.table2, x, y, null);	
 		}
 	}

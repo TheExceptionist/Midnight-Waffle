@@ -2,12 +2,14 @@ package com.theexceptionist.main;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.theexceptionist.gameobject.GameObject;
+import com.theexceptionist.gameobject.Player;
 import com.theexceptionist.gameobject.WoodTile;
 
 public class Handler {
-	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
+	private LinkedList<GameObject> objects = new LinkedList<GameObject>();
 	private ArrayList<WoodTile> wood = new ArrayList<WoodTile>();
 	
 	public Handler(){
@@ -15,17 +17,21 @@ public class Handler {
 	}
 	
 	public void tick(){
-		for(GameObject o : objects){
-			o.tick();
+		for(int i = 0; i < objects.size(); i++){
+			GameObject tempObject = objects.get(i);
+			
+			tempObject.tick();
 		}
 	}
 	
 	public void render(Graphics g){
-		for(WoodTile o : wood){
-			o.render(g);
+		for(WoodTile w : wood){
+			w.render(g);
 		}
-		for(GameObject o : objects){
-			o.render(g);
+		for(int i = 0; i < objects.size(); i++){
+			GameObject tempObject = objects.get(i);
+			
+			tempObject.render(g);
 		}
 	}
 	

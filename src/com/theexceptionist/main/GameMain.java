@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 import java.util.Random;
 
 import com.theexceptionist.assets.Assets;
+import com.theexceptionist.gameobject.Player;
 import com.theexceptionist.gameobject.Rug;
 import com.theexceptionist.gameobject.Table;
 import com.theexceptionist.gameobject.WoodTile;
@@ -33,6 +34,7 @@ public class GameMain extends Canvas implements Runnable{
 	private InputHandler input = new InputHandler(this); 
 	private Handler h = new Handler();
 	private Assets a = new Assets();
+	private Player p;
 	
 	private Random r = new Random(System.nanoTime());
 	
@@ -152,6 +154,8 @@ public class GameMain extends Canvas implements Runnable{
 			if(gen){
 				genLevel();
 				gen = false;
+				p = new Player("Player", width/2 - 70, height/2 + 50, 32, 32, h);
+				h.addObject(p);
 			}
 			
 			h.tick();
