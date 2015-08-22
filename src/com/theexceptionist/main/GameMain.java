@@ -1,115 +1,190 @@
 package com.theexceptionist.main;
 
-import java.awt.Dimension;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
+import java.awt.image.BufferStrategy;
 
-import javax.swing.JPanel;
+import com.theexceptionist.assets.Assets;
+import com.theexceptionist.input.InputHandler;
 
-import com.theexceptionist.gamestate.GameStateManager;
 
-public class GameMain extends JPanel implements Runnable, KeyListener{
+public class GameMain extends Canvas implements Runnable{
 	public static final int width = 400;
 	public static final int height = 500;
 	public static final int scale = 2;
+	public static final String name = "Midnight Waffles";
+	
+	public static final int StartID = 0;
+	public static final int MenuID = 1;
+	public static final int GameID = 2;
+	public static final int HelpID = 3;
+	
+	private int currentChoice = 0;
+	
+	private InputHandler input = new InputHandler(this); 
+	private Handler h = new Handler();
+	private Assets a = new Assets();
+	
+	private int tickCount = 0;
 	
 	private boolean running = false;
 	private Thread thread;
 	private int fps = 60;
 	private int targetTime = 1000 / fps;
+
+	private String[] options = {"Start","Help","Quit"};
 	
-	private BufferedImage image;
-	private Graphics2D g;
+	private Color titleColor;
+	private Font titleFont;
+	private Font font;
 	
-	private GameStateManager gsm;
-		
+	private int currentStateID;
+	private String[] states = {"Start", "Menu", "Game", "Help"};
+	private String currentState;
+	
 	private void init(){
-		gsm = new GameStateManager();
-		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		g = (Graphics2D) image.getGraphics();
-		running = true;
+		currentStateID = StartID;
+		currentState = states[StartID];
+		
+		titleFont = new Font("Times New Roman", Font.PLAIN, 40);
+		font = new Font("Arial", Font.PLAIN, 30);
+		titleColor = new Color(255, 0, 0);
+		
+		Assets.load();
 	}
 	
-	public GameMain(){
-		super();
-		setPreferredSize(new Dimension(width*scale, height * scale));
-		setFocusable(true);
-		requestFocus();
+	public void start(){
+		running = true;
+		new Thread(this).start();
 	}
-
-	public void addNotify(){
-		super.addNotify();
-		if(thread == null){
-			thread = new Thread();
-			addKeyListener(this);
-			thread.start();
-		}
+	
+	public void stop(){
+		running = false;
 	}
-
-	public void keyPressed(KeyEvent arg0) {
-		
-		
-	}
-
-
-	public void keyReleased(KeyEvent arg0) {
-		
-		
-	}
-
-
-	public void keyTyped(KeyEvent arg0) {
-		
-		
-	}
-
 
 	public void run() {
+		long lastTime = System.nanoTime();
+		double unprocessed = 0;
+		double nsPerTick = 1000000000.0 / 60;
+		int frames = 0;
+		int ticks = 0;
+		long lastTimer1 = System.currentTimeMillis();
+
 		init();
-		
-		long start;
-		long elapsed;
-		long wait;
-		
-		// game loop
-		while(running) {
-			
-			start = System.nanoTime();
-			
-			update();
-			draw();
-			drawToScreen();
-			
-			elapsed = System.nanoTime() - start;
-			
-			wait = targetTime - elapsed / 1000000;
-			if(wait < 0) wait = 5;
-			
-			try {
-				Thread.sleep(wait);
+
+		while (running) {
+			long now = System.nanoTime();
+			unprocessed += (now - lastTime) / nsPerTick;
+			lastTime = now;
+			boolean shouldRender = true;
+			while (unprocessed >= 1) {
+				ticks++;
+				tick();
+				unprocessed -= 1;
+				shouldRender = true;
 			}
-			catch(Exception e) {
+
+			try {
+				Thread.sleep(2);
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+
+			if (shouldRender) {
+				frames++;
+				render();
+			}
+
+			if (System.currentTimeMillis() - lastTimer1 > 1000) {
+				lastTimer1 += 1000;
+				System.out.println(ticks + " ticks, " + frames + " fps");
+				frames = 0;
+				ticks = 0;
+			}
+		}
+	}
+
+	public void tick() {
+		tickCount++;
+		if(currentState == "Start"){
+			if(tickCount >= 5){
+				if(input.up.down) {
+					currentChoice--;
+					if(currentChoice <= -1){
+						currentChoice = 2;
+					}
+				}
+				if(input.down.down) {
+					currentChoice++;
+					if(currentChoice >= 3){
+						currentChoice = 0;
+					}
+				}
+				if(input.choose.down){
+					if(options[currentChoice] == "Start"){
+						currentState = states[GameID];
+					}
+					if(options[currentChoice] == "Help"){
+						currentState = states[HelpID];
+					}
+					if(options[currentChoice] == "Quit"){
+						System.exit(0);
+					}
+				}
+				tickCount = 0;
+			}
+		}
+		if(currentState == "Menu"){
+			
+		}
+		if(currentState == "Game"){
+			h.tick();
+		}
+		if(currentState == "Help"){
 			
 		}
 	}
 
-	private void update() {
-		gsm.update();
+	public void render(){
+		BufferStrategy bs = getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			requestFocus();
+			return;
+		}
+		
+		Graphics g = bs.getDrawGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, width*scale, height*scale);
+		
+		if(currentState == "Start"){
+			g.setColor(titleColor);
+			g.setFont(titleFont);
+			g.drawString(name, width - 120, height - height / 2);
+			
+			g.setFont(font);
+			for(int i = 0; i < options.length; i++){
+				if(i == currentChoice){
+					g.setColor(Color.RED);
+				}else{
+					g.setColor(Color.gray);
+				}
+				g.drawString(options[i], width, height + 30 * i);
+			}
+		}
+		if(currentState == "Menu"){
+			
+		}
+		if(currentState == "Game"){
+			h.render(g);
+		}
+		if(currentState == "Help"){
+			
+		}
+		
+		g.dispose();
+		bs.show();
 	}
-
-	private void draw() {
-		gsm.draw(g);	
-	}
-
-	private void drawToScreen() {
-		Graphics g2 = getGraphics();
-		g2.drawImage(image, width * scale, height * scale, null);
-		g2.dispose();
-	}
-
 }
