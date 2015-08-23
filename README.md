@@ -56,6 +56,9 @@ Horde mode code:
 			}else if(r.nextInt(200 * GameMain.wave) <= 10 * GameMain.wave){
 				h.addObject(new EnemyThrower("Nerd Thrower", r.nextInt(250), -10, 16, 16, h));
 			}else{
+					if(r.nextInt(500 * (Math.abs(Math.round(GameMain.numMarks / GameMain.wave)))) <= 10 * GameMain.waveCount){
+					HordeMode();
+				}
 				h.addObject(new EnemyRunner("Nerd Runner", r.nextInt(250), -10, 16, 16, h));
 			}
 		}
