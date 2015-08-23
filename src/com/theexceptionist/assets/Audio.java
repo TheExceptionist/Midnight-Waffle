@@ -23,7 +23,7 @@ public class Audio {
 		try {			
 			AudioInputStream ais =
 				AudioSystem.getAudioInputStream(
-					Audio.class.getResourceAsStream(s)
+					Audio.class.getResource(s)
 				);
 			AudioFormat baseFormat = ais.getFormat();
 			AudioFormat decodeFormat = new AudioFormat(
