@@ -76,12 +76,12 @@ Horde mode code:
 		}else{
 			Audio.play("hurt3");
 		}
-		han.addText(new SplashText("Took Waffles: "+amount, x, y, han));
+		han.addText(new SplashText(name+" lost Waffles: "+amount, x, y, han));
 		numPancakes -= amount;
 	}
 	
 	public void setHealth(int amount){
-		han.addText(new SplashText("Healed: "+amount, x, y, han));
+		han.addText(new SplashText(name+" got healed: "+amount, x, y, han));
 		health += amount;
 	}
 	
@@ -94,6 +94,6 @@ Horde mode code:
 		}else{
 			Audio.play("hurt3");
 		}
-		han.addText(new SplashText("Damaged: "+damage, x, y, han));
+		han.addText(new SplashText(name+" got damaged: "+damage, x, y, han));
 		health -= damage;
 	}
