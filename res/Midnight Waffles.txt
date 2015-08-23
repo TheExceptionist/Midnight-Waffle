@@ -1,0 +1,14 @@
+Midnight Waffles 
+
+Future Versions
+-More enemies
+-Clean the game up
+-Better Ai
+-Allies
+
+Changelog
+v1.0.0
+-Added a complete game with enemies, music, obstacles, etc.
+
+v1.0.5
+-Changed the thrower's ai

@@ -23,6 +23,7 @@ public abstract class Enemy extends Mob{
 	private int coolDown = 0;
 	private int coolDown1 = 0;
 	private int attack;
+	private int thrown = 0, throwLim;
 	private boolean PlayerKill = false;
 	private boolean shouldStop = false;
 	
@@ -37,6 +38,7 @@ public abstract class Enemy extends Mob{
 		health = 1 * type;
 		turnLim = 10;
 		attack = 1 * type;
+		throwLim = rand.nextInt(3)+3;
 		
 		if(rand.nextInt(100) <= 5){
 			isElite = true;
@@ -46,6 +48,7 @@ public abstract class Enemy extends Mob{
 		if(isElite){
 			health *= 2;
 			attack *= 2;
+			throwLim *= 2;
 		}
 	}
 	
@@ -169,9 +172,14 @@ public abstract class Enemy extends Mob{
 			dy = 0;
 			if(coolDown1 == 0){
 				aim();
+				thrown++;
 			}
 			if(coolDown1 > 0){
 				coolDown1--;
+			}
+			if(thrown >= throwLim){
+				shouldStop = false;
+				thrown = 0;
 			}
 		}
 	}
