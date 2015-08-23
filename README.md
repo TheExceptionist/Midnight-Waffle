@@ -64,3 +64,36 @@ Horde mode code:
 		}
 	}
 	
+	
+	
+	Some more 
+		public void takeWaffles(int amount){
+		int r = rand.nextInt(3);
+		if(r == 0){
+			Audio.play("hurt1");
+		}else if(r == 1){
+			Audio.play("hurt2");
+		}else{
+			Audio.play("hurt3");
+		}
+		han.addText(new SplashText("Took Waffles: "+amount, x, y, han));
+		numPancakes -= amount;
+	}
+	
+	public void setHealth(int amount){
+		han.addText(new SplashText("Healed: "+amount, x, y, han));
+		health += amount;
+	}
+	
+	public void setDamage(int damage){
+		int r = rand.nextInt(3);
+		if(r == 0){
+			Audio.play("hurt1");
+		}else if(r == 1){
+			Audio.play("hurt2");
+		}else{
+			Audio.play("hurt3");
+		}
+		han.addText(new SplashText("Damaged: "+damage, x, y, han));
+		health -= damage;
+	}
