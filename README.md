@@ -21,8 +21,9 @@ To change:
 		}
 		
 		if(isCollidingU){
+					int cho = rand.nextInt(2); 
 			dy = 0;
-			if(rand.nextInt(2) == 0){
+			if(cho == 0){
 				turnLeft();
 			}else{
 				turnRight();
