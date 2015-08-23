@@ -103,6 +103,8 @@ public class GameMain extends Canvas implements Runnable{
 		Audio.load("/Sounds/throw2.wav", "throw2");
 		Audio.load("/Sounds/throw3.wav", "throw3");
 		Audio.load("/Sounds/throw4.wav", "throw4");
+		
+		Audio.load("/Music/midnight_waffles.wav", "theme");
 	}
 	
 	public void start(){
@@ -159,6 +161,7 @@ public class GameMain extends Canvas implements Runnable{
 	public void tick() {
 		tickCount++;
 		if(currentState == "Start"){
+			Audio.stop("theme");
 			if(tickCount >= 5){
 				if(input.up.down) {
 					currentChoice--;
@@ -198,6 +201,7 @@ public class GameMain extends Canvas implements Runnable{
 				h.addObject(p);
 				hud = new HUD(p);
 				s = new Spawner(h);
+				Audio.loop("theme");
 				
 				while(numMarks == 0){
 					for(int i = 0; i < h.objects.size(); i++){
