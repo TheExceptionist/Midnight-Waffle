@@ -39,4 +39,25 @@ To change:
 		}
 
 }
+
+Horde mode code:
+
+			if(r.nextInt(500 * (GameMain.numMarks / GameMain.wave)) <= 10 * GameMain.waveCount){
+				HordeMode();
+			}
+			
+				private void HordeMode(){
+		h.addText(new SplashText("Horde Incoming!!!!", 200, -10, h));
+		int numPeople = r.nextInt(10 * (GameMain.numMarks / GameMain.wave)) + 10;
+		
+		for(int i = 0; i < numPeople; i++){
+			if(r.nextInt(100 * GameMain.wave) <= 5 * GameMain.wave){
+				h.addObject(new EnemyThief("Nerd Thief", r.nextInt(250), -10, 16, 16, h));
+			}else if(r.nextInt(200 * GameMain.wave) <= 10 * GameMain.wave){
+				h.addObject(new EnemyThrower("Nerd Thrower", r.nextInt(250), -10, 16, 16, h));
+			}else{
+				h.addObject(new EnemyRunner("Nerd Runner", r.nextInt(250), -10, 16, 16, h));
+			}
+		}
+	}
 	
