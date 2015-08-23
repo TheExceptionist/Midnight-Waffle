@@ -18,6 +18,17 @@ public class Player extends Mob{
 	private int tickCount;
 	private int money;
 	private int coolDown;
+	private int score = 0;
+	private int sec = 0, n = 0;
+	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	private Random rand = new Random(System.nanoTime());
 	
 	public Player(String name, int x, int y, int w, int h, Handler han, InputHandler i) {
@@ -34,6 +45,27 @@ public class Player extends Mob{
 	public void render(Graphics g) {
 		if(!isThrowing){
 			g.drawImage(Assets.player1, x, y, null);
+		}else{
+			n++;
+			
+			if(n == 10){
+				sec++;
+				n = 0;
+			}
+			
+			if(sec == 0){
+				g.drawImage(Assets.player2, x, y, null);
+			}
+			if(sec == 1){
+				g.drawImage(Assets.player3, x, y, null);
+			}
+			if(sec == 2){
+				g.drawImage(Assets.player4, x, y, null);
+			}
+			if(sec == 3){
+				g.drawImage(Assets.player1, x, y, null);
+				sec = 0;
+			}
 		}
 	}
 
@@ -44,20 +76,22 @@ public class Player extends Mob{
 	public void tick(){
 		super.tick();
 		
-		x = GameMain.clamp(x, 0, 250);
+		x = GameMain.clamp(x, 0, 625);
 
 		tickCount++;
 		if(tickCount >= 2){
-			if(i.left.down && !isCollidingR){
+			if(i.left.down /*!isCollidingR*/){
 				dx = -3;
 			}
-			else if(i.right.down && !isCollidingL){
+			else if(i.right.down/*!isCollidingL*/){
 				dx = 3;
 			}else{
 				dx = 0;
 			}
 			tickCount = 0;
 		}
+		
+		System.out.println(x);
 		
 		if(coolDown == 0){
 			if(i.attack.down && numPancakes > 0){
@@ -74,6 +108,11 @@ public class Player extends Mob{
 	
 	public void setWaffles(int amount){
 		numPancakes += amount;
+	}
+	
+	public void die(){
+		GameMain.gameOver();
+		super.die();
 	}
 	
 	public void toss(int x, int y){

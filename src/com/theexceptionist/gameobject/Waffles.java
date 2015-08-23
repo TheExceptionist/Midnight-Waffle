@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import com.theexceptionist.assets.Assets;
 import com.theexceptionist.assets.Audio;
+import com.theexceptionist.gameobject.mob.Enemy;
 import com.theexceptionist.gameobject.mob.Mark;
 import com.theexceptionist.gameobject.mob.Player;
 import com.theexceptionist.main.Handler;
@@ -54,9 +55,13 @@ public class Waffles extends Entity{
 						if(tempObject instanceof Mob){
 							if(tempObject instanceof Player && (isPlayer == 1 || isPlayer == 0)){
 								han.addText(new SplashText("Waffle Throw!!", tempObject.x, tempObject.y, han));
-							}else if(isPlayer != 2){
-								Mob mob = (Mob) tempObject;
-								mob.setDamage(1);	
+							}else if(isPlayer != 2 && tempObject instanceof Enemy){
+								Enemy mob = (Enemy) tempObject;
+								if(isPlayer == 0){
+									mob.setDamage(1, true);	
+								}else{
+									mob.setDamage(1, false);	
+								}
 								die();
 							}else if((tempObject instanceof Player || tempObject instanceof Mark) && isPlayer == 2){
 								Mob mob = (Mob) tempObject;

@@ -24,6 +24,7 @@ public abstract class Enemy extends Mob{
 	private int coolDown1 = 0;
 	private int attack;
 	private int thrown = 0, throwLim;
+	private int scoreAmount;
 	private boolean PlayerKill = false;
 	private boolean shouldStop = false;
 	
@@ -39,6 +40,7 @@ public abstract class Enemy extends Mob{
 		turnLim = 10;
 		attack = 1 * type;
 		throwLim = rand.nextInt(3)+3;
+		scoreAmount = rand.nextInt(100)+50 * type;
 		
 		if(rand.nextInt(100) <= 5){
 			isElite = true;
@@ -49,6 +51,7 @@ public abstract class Enemy extends Mob{
 			health *= 2;
 			attack *= 2;
 			throwLim *= 2;
+			scoreAmount *= 2;
 		}
 	}
 	
@@ -88,13 +91,13 @@ public abstract class Enemy extends Mob{
 			n = 0;
 		}
 		
-		if(y > 400){
+		if(y > 675){
 			die();
 		}
 		if(x < -20){
 			die();
 		}
-		if(x > 400){
+		if(x > 675){
 			die();
 		}
 	}
@@ -272,6 +275,8 @@ public abstract class Enemy extends Mob{
 						p.setMoney(rand.nextInt(25*type)+25);
 						han.addText(new SplashText("Money Gained!!!!", x, y, han));
 					}
+					
+					p.setScore(scoreAmount);
 				}
 			}
 		}

@@ -26,13 +26,13 @@ public class Spawner {
 		if(spawnTime >= spawnLim){
 			if(r.nextInt(100 * GameMain.wave) <= 5 * GameMain.wave){
 				//System.out.println("Thief");
-				h.addObject(new EnemyThief("Nerd Thief", r.nextInt(250), -10, 16, 16, h));
+				h.addObject(new EnemyThief("Nerd Thief", r.nextInt(625), -10, 16, 16, h));
 			}else if(r.nextInt(200 * GameMain.wave) <= 10 * GameMain.wave){
 				//System.out.println("Thrower");
-				h.addObject(new EnemyThrower("Nerd Thrower", r.nextInt(250), -10, 16, 16, h));
+				h.addObject(new EnemyThrower("Nerd Thrower", r.nextInt(625), -10, 16, 16, h));
 			}else{
 				//System.out.println("Runner");
-				h.addObject(new EnemyRunner("Nerd Runner", r.nextInt(250), -10, 16, 16, h));
+				h.addObject(new EnemyRunner("Nerd Runner", r.nextInt(625), -10, 16, 16, h));
 			}
 			System.out.println(GameMain.gameMarks+" "+GameMain.numMarks);
 			if(GameMain.gameMarks > GameMain.numMarks){
@@ -42,7 +42,7 @@ public class Spawner {
 					if(tempObject instanceof Table){
 						Table t = (Table) tempObject;
 						
-						if(r.nextInt(100) <= 25 && t.getX() < 256 && t.getY() < 256){
+						if(r.nextInt(100) <= 25 && t.getX() < 625 && t.getY() < 625){
 							h.addObject(new Mark("Mark",t.getX(), t.getY(), 16, 16, h));
 							break;
 						}

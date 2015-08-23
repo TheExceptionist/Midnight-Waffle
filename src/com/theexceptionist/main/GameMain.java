@@ -2,9 +2,11 @@ package com.theexceptionist.main;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
@@ -20,9 +22,10 @@ import com.theexceptionist.input.InputHandler;
 
 
 public class GameMain extends Canvas implements Runnable{
-	public static final int width = 400;
-	public static final int height = 500;
-	public static final int scale = 2;
+	public static final Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+	public static final int width = screensize.width;
+	public static final int height = screensize.height;
+	//public static final int scale = 2;
 	public static final String name = "Midnight Waffles";
 	
 	public static final int StartID = 0;
@@ -41,6 +44,7 @@ public class GameMain extends Canvas implements Runnable{
 	private int currentChoice = 0;
 	
 	private boolean gen = true;
+	public static boolean lose = false;
 	
 	private InputHandler input = new InputHandler(this); 
 	private Handler h = new Handler();
@@ -197,7 +201,7 @@ public class GameMain extends Canvas implements Runnable{
 			if(gen){
 				genLevel();
 				gen = false;
-				p = new Player("Player", width/2 - 70, height/2 + 50, 16, 16, h, input);
+				p = new Player("Player", 0, 320, 16, 16, h, input);
 				h.addObject(p);
 				hud = new HUD(p);
 				s = new Spawner(h);
@@ -210,7 +214,7 @@ public class GameMain extends Canvas implements Runnable{
 						if(tempObject instanceof Table){
 							Table t = (Table) tempObject;
 							
-							if(r.nextInt(100) <= 25 && t.getX() < 256 && t.getY() < 256){
+							if(r.nextInt(100) <= 25 && t.getX() < 625 && t.getY() < 256){
 								h.addObject(new Mark("Mark",t.getX(), t.getY(), 16, 16, h));
 							}
 						}
@@ -223,6 +227,11 @@ public class GameMain extends Canvas implements Runnable{
 			}
 			h.tick();
 			s.tick();
+			if(lose){
+				if(input.menu.down){
+					currentState = states[StartID];
+				}
+			}
 		}
 		if(currentState == "Help"){
 			
@@ -230,8 +239,8 @@ public class GameMain extends Canvas implements Runnable{
 	}
 
 	private void genLevel() {
-		for(int x = 0; x < width * scale; x += 30){
-			for(int y = 0; y < height * scale; y += 30){
+		for(int x = 0; x < width; x += 30){
+			for(int y = 0; y < height; y += 30){
 				h.addTile(new WoodTile(x, y, h));
 				
 				if(r.nextInt(100) <= 24){
@@ -245,6 +254,10 @@ public class GameMain extends Canvas implements Runnable{
 		}
 		
 	}
+	
+	public static void gameOver(){
+		lose = true;
+	}
 
 	public void render(){
 		BufferStrategy bs = getBufferStrategy();
@@ -256,12 +269,12 @@ public class GameMain extends Canvas implements Runnable{
 		
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.black);
-		g.fillRect(0, 0, width*scale, height*scale);
+		g.fillRect(0, 0, width, height);
 		
 		if(currentState == "Start"){
 			g.setColor(titleColor);
 			g.setFont(titleFont);
-			g.drawString(name, width - 120, height - height / 2);
+			g.drawString(name, width/2 - 120, height/4);
 			
 			g.setFont(font);
 			for(int i = 0; i < options.length; i++){
@@ -270,7 +283,7 @@ public class GameMain extends Canvas implements Runnable{
 				}else{
 					g.setColor(Color.gray);
 				}
-				g.drawString(options[i], width, height + 30 * i);
+				g.drawString(options[i], width/2, height/2 + 30 * i);
 			}
 		}
 		if(currentState == "Menu"){
