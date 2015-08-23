@@ -81,15 +81,28 @@ public class GameMain extends Canvas implements Runnable{
 		
 		Assets.load();
 		
+		Audio.init();
+		
 		loadSounds();
 	}
 	
 	public void loadSounds(){
-		Audio.load("/Sounds/hurt1", "hurt1");
-		Audio.load("/Sounds/hurt2", "hurt2");
-		Audio.load("/Sounds/hurt3", "hurt3");
+		Audio.load("/Sounds/hurt1.wav", "hurt1");
+		Audio.load("/Sounds/hurt2.wav", "hurt2");
+		Audio.load("/Sounds/hurt3.wav", "hurt3");
 		
-		Audio.load("/Sounds/hackerb1", "hackerb1");
+		Audio.load("/Sounds/hackerb1.wav", "hackerb1");
+		
+		Audio.load("/Sounds/pancakesfinished.wav", "finished");
+		
+		Audio.load("/Sounds/pancakesgain.wav", "gain");
+		
+		Audio.load("/Sounds/select.wav", "select");
+		
+		Audio.load("/Sounds/throw1.wav", "throw1");
+		Audio.load("/Sounds/throw2.wav", "throw2");
+		Audio.load("/Sounds/throw3.wav", "throw3");
+		Audio.load("/Sounds/throw4.wav", "throw4");
 	}
 	
 	public void start(){
@@ -160,6 +173,7 @@ public class GameMain extends Canvas implements Runnable{
 					}
 				}
 				if(input.choose.down){
+					Audio.play("select");
 					if(options[currentChoice] == "Start"){
 						currentState = states[GameID];
 					}

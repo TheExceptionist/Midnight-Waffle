@@ -2,8 +2,10 @@ package com.theexceptionist.gameobject.mob;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 
 import com.theexceptionist.assets.Assets;
+import com.theexceptionist.assets.Audio;
 import com.theexceptionist.gameobject.Mob;
 import com.theexceptionist.gameobject.Waffles;
 import com.theexceptionist.input.InputHandler;
@@ -14,9 +16,9 @@ public class Player extends Mob{
 	private InputHandler i;
 	private boolean isThrowing = false;
 	private int tickCount;
-	private int numPancakes;
 	private int money;
 	private int coolDown;
+	private Random rand = new Random(System.nanoTime());
 	
 	public Player(String name, int x, int y, int w, int h, Handler han, InputHandler i) {
 		super(name, x, y, w, h, han);
@@ -75,6 +77,16 @@ public class Player extends Mob{
 	}
 	
 	public void toss(int x, int y){
+		int r = rand.nextInt(4);
+		if(r == 0){
+			Audio.play("throw1");
+		}else if(r == 1){
+			Audio.play("throw2");
+		}else if(r == 2){
+			Audio.play("throw3");
+		}else{
+			Audio.play("throw4");
+		}
 		han.addObject(new Waffles("Waffle", x + 4, y, 8, 8, han, 0));
 		numPancakes--;
 	}

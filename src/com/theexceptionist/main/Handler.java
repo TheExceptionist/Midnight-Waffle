@@ -63,7 +63,12 @@ public class Handler {
 	}
 	
 	public void addText(SplashText t){
-		text.add(t);
+		if(text.size() > 10){
+			text.removeFirst();
+			text.add(t);
+		}else{
+			text.add(t);
+		}
 	}
 	
 	public void addTile(WoodTile o){

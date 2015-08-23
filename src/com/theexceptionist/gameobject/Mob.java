@@ -2,7 +2,9 @@ package com.theexceptionist.gameobject;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 
+import com.theexceptionist.assets.Audio;
 import com.theexceptionist.main.Handler;
 
 public abstract class Mob extends Entity{
@@ -11,6 +13,8 @@ public abstract class Mob extends Entity{
 	protected boolean isCollidingL = false;
 	protected boolean isCollidingU = false;
 	protected boolean isCollidingD = false;
+	protected int numPancakes;
+	private Random rand = new Random(System.nanoTime());
 	
 	public Mob(String name, int x, int y, int w, int h, Handler han) {
 		super(name, x, y, w, h, han);
@@ -62,11 +66,31 @@ public abstract class Mob extends Entity{
 		}
 	}
 	
+	public void takeWaffles(int amount){
+		int r = rand.nextInt(3);
+		if(r == 0){
+			Audio.play("hurt1");
+		}else if(r == 1){
+			Audio.play("hurt2");
+		}else{
+			Audio.play("hurt3");
+		}
+		numPancakes -= amount;
+	}
+	
 	public void setHealth(int amount){
 		health += amount;
 	}
 	
 	public void setDamage(int damage){
+		int r = rand.nextInt(3);
+		if(r == 0){
+			Audio.play("hurt1");
+		}else if(r == 1){
+			Audio.play("hurt2");
+		}else{
+			Audio.play("hurt3");
+		}
 		health -= damage;
 	}
 }

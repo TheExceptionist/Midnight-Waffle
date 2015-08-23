@@ -11,18 +11,13 @@ public class EnemyRunner extends Enemy{
 	private Random rand = new Random(System.nanoTime());
 	public EnemyRunner(String name, int x, int y, int w, int h, Handler han) {
 		super(name, x, y, w, h, han);
-		if(rand.nextInt(100) <= 5){
-			isElite = true;
-		}
-		if(isElite){
-			health *= 2;
-		}
 		genType();
 	}
 
 	public void tick(){
 		super.tick();
 		wander();
+		collide();
 	}
 	
 	public void render(Graphics g){

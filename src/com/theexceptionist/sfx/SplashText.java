@@ -19,7 +19,7 @@ public class SplashText {
 		this.x = x;
 		this.y = y;
 		this.han = han;
-		f = new Font("Arial", Font.PLAIN, 15);
+		f = new Font("Arial", Font.PLAIN, 8);
 		aliveLim = 100;
 	}
 	

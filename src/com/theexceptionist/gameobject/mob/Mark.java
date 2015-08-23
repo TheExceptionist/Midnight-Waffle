@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.util.Random;
 
 import com.theexceptionist.assets.Assets;
+import com.theexceptionist.assets.Audio;
 import com.theexceptionist.gameobject.GameObject;
 import com.theexceptionist.gameobject.Mob;
 import com.theexceptionist.gameobject.Waffles;
@@ -13,7 +14,7 @@ import com.theexceptionist.main.Handler;
 import com.theexceptionist.sfx.SplashText;
 
 public class Mark extends Mob{
-	private int sec = 0, n, stirs = 0;
+	private int sec = 0, n, stirs = 0, stirLim;
 	private int wafflesMade = 0;
 	private int healthsMade = 0;
 	private Random rand;
@@ -24,6 +25,7 @@ public class Mark extends Mob{
 		GameMain.gameMarks = GameMain.numMarks;
 		health = 3;
 		rand = new Random();
+		stirLim = rand.nextInt(10)+10;
 	}
 
 	public void render(Graphics g) {
@@ -46,16 +48,22 @@ public class Mark extends Mob{
 		}
 	}
 	
+	public void die(){
+		GameMain.numMarks--;
+		super.die();
+	}
+	
 	public void tick(){
-		if(health == 0){
-			GameMain.numMarks--;
-		}
 		super.tick();
-		if(stirs == 10 ){
-			if(rand.nextInt(2) == 0){
-				wafflesMade++;
-			}else{
+		if(stirs == stirLim){
+			if(rand.nextInt(100) <= 20){
+				Audio.play("finished");
+				han.addText(new SplashText("Heart Finished!!!!", x, y, han));
 				healthsMade++;
+			}else{
+				wafflesMade++;
+				Audio.play("finished");
+				han.addText(new SplashText("Waffle  Finished!!!!", x, y, han));
 			}
 			stirs = 0;
 		}
@@ -69,7 +77,7 @@ public class Mark extends Mob{
 			
 			if(tempObject instanceof Player){
 				Player p = (Player) tempObject;
-				if(p.getPancakes() <= 1){	
+				if(p.getPancakes() <= 2){	
 					int pWaffles;
 					if(wafflesMade > 3){
 						p.setWaffles(3);
@@ -103,6 +111,7 @@ public class Mark extends Mob{
 						p.setHealth(1);
 						healthsMade -= 1;
 						han.addText(new SplashText("Heal You!!!", x, y, han));
+						Audio.play("gain");
 					}
 				}
 			}

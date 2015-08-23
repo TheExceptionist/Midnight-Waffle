@@ -1,11 +1,14 @@
 package com.theexceptionist.gameobject.mob;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
+import com.theexceptionist.assets.Audio;
 import com.theexceptionist.gameobject.GameObject;
 import com.theexceptionist.gameobject.Mob;
+import com.theexceptionist.gameobject.Waffles;
 import com.theexceptionist.main.GameMain;
 import com.theexceptionist.main.Handler;
 import com.theexceptionist.sfx.SplashText;
@@ -18,7 +21,10 @@ public abstract class Enemy extends Mob{
 	private int turning = 0;
 	private int turnLim;
 	private int coolDown = 0;
+	private int coolDown1 = 0;
+	private int attack;
 	private boolean PlayerKill = false;
+	private boolean shouldStop = false;
 	
 	private boolean turnL = false, turnR = false;
 	protected int sec = 0;
@@ -28,8 +34,19 @@ public abstract class Enemy extends Mob{
 		super(name, x, y, w, h, han);
 		rand = new Random(System.nanoTime());
 		type = rand.nextInt(3);
-		health = 3;
+		health = 1 * type;
 		turnLim = 10;
+		attack = 1 * type;
+		
+		if(rand.nextInt(100) <= 5){
+			isElite = true;
+			Audio.play("hackerb1");
+			han.addText(new SplashText("Hack Elite Spawned!!!", x, y, han));
+		}
+		if(isElite){
+			health *= 2;
+			attack *= 2;
+		}
 	}
 	
 	protected void genType(){
@@ -54,6 +71,10 @@ public abstract class Enemy extends Mob{
 	
 
 	public void render(Graphics g) {
+		if(isElite){
+			g.setColor(Color.BLUE);
+			g.drawString("Elite", x, y);
+		}
 	}
 	
 	public void tick(){
@@ -73,7 +94,105 @@ public abstract class Enemy extends Mob{
 		if(x > 400){
 			die();
 		}
-		
+	}
+	protected void wander(){
+			if(turnL){
+				turning++;
+				turnLeft();
+				if(turning >= turnLim){
+					turning = 0;
+					turnL = false;
+				}
+			}else if(turnR){
+				turning++;
+				turnRight();
+				if(turning >= turnLim){
+					turning = 0;
+					turnR = false;
+				}
+			}else{
+				if(isCollidingU){
+					dy = 0;
+					if(rand.nextInt(2) == 0){
+						turnLeft();
+					}else{
+						turnRight();
+					}
+				}else if(rand.nextInt(500) <= 1){
+					if(rand.nextInt(2) == 0){
+						turnLeft();
+					}else{
+						turnRight();
+					}
+				}else{
+					forward();
+				}
+			}
+	}
+	
+	protected void wanderThrower(){
+		if(!shouldStop){
+			if(turnL){
+				turning++;
+				turnLeft();
+				if(turning >= turnLim){
+					turning = 0;
+					turnL = false;
+				}
+			}else if(turnR){
+				turning++;
+				turnRight();
+				if(turning >= turnLim){
+					turning = 0;
+					turnR = false;
+				}
+			}else{
+				if(isCollidingU){
+					dy = 0;
+					if(rand.nextInt(2) == 0){
+						turnLeft();
+					}else{
+						turnRight();
+					}
+				}else if(rand.nextInt(500) <= 1){
+					if(rand.nextInt(2) == 0){
+						turnLeft();
+					}else{
+						turnRight();
+					}
+				}else{
+					forward();
+				}
+			}
+		}else{
+			dx = 0;
+			dy = 0;
+			if(coolDown1 == 0){
+				aim();
+			}
+			if(coolDown1 > 0){
+				coolDown1--;
+			}
+		}
+	}
+	
+	protected void aim(){
+		int r = rand.nextInt(4);
+		if(r == 0){
+			Audio.play("throw1");
+		}else if(r == 1){
+			Audio.play("throw2");
+		}else if(r == 2){
+			Audio.play("throw3");
+		}else{
+			Audio.play("throw4");
+		}
+		han.addObject(new Waffles("Waffle", x + 4, y, 8, 8, han, 2));
+		numPancakes--;
+		coolDown1 = 100;
+	}
+	
+	protected void collide(){
 		for(int i = 0; i < han.objects.size(); i++){
 			GameObject tempObject = han.objects.get(i);
 			
@@ -81,7 +200,7 @@ public abstract class Enemy extends Mob{
 				Player p = (Player) tempObject;
 				
 				if(p.getBounds().intersects(getBounds()) && coolDown == 0){
-					p.setDamage(1);
+					p.setDamage(attack);
 					coolDown = 100;
 				}
 			}
@@ -89,51 +208,32 @@ public abstract class Enemy extends Mob{
 				Mark m = (Mark) tempObject;
 				
 				if(m.getBounds().intersects(getBounds()) && coolDown == 0){
-					m.setDamage(1);
+					m.setDamage(attack);
 					setDamage(1);
 					coolDown = 100;
 				}
 			}
 		}
-		
 		if(coolDown > 0){
 			coolDown--;
 		}
 	}
 	
-	protected void wander(){
-		if(turnL){
-			turning++;
-			turnLeft();
-			if(turning >= turnLim){
-				turning = 0;
-				turnL = false;
-			}
-		}else if(turnR){
-			turning++;
-			turnRight();
-			if(turning >= turnLim){
-				turning = 0;
-				turnR = false;
-			}
-			System.out.println(turning);
-		}else{
-			if(isCollidingU){
-				dy = 0;
-				if(rand.nextInt(2) == 0){
-					turnLeft();
-				}else{
-					turnRight();
+	protected void collideThief(){
+		for(int i = 0; i < han.objects.size(); i++){
+			GameObject tempObject = han.objects.get(i);
+			
+			if(tempObject instanceof Player || tempObject instanceof Mark){
+				Mob m = (Mob) tempObject;
+				
+				if(m.getBounds().intersects(getBounds())){
+					m.takeWaffles(attack);
+					coolDown = 100;
 				}
-			}else if(rand.nextInt(500) <= 1){
-				if(rand.nextInt(2) == 0){
-					turnLeft();
-				}else{
-					turnRight();
-				}
-			}else{
-				forward();
 			}
+		}
+		if(coolDown > 0){
+			coolDown--;
 		}
 	}
 
@@ -192,5 +292,8 @@ public abstract class Enemy extends Mob{
 	public void forward(){
 		dy = 1;
 		dx = 0;
+		if(rand.nextInt(500) <= 5){
+			shouldStop = true;
+		}
 	}
 }
