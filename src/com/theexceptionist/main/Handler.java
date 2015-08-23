@@ -4,8 +4,9 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import com.theexceptionist.assets.Assets;
 import com.theexceptionist.gameobject.GameObject;
-import com.theexceptionist.gameobject.Player;
+import com.theexceptionist.gameobject.Waffles;
 import com.theexceptionist.gameobject.WoodTile;
 
 public class Handler {

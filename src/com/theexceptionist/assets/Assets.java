@@ -10,6 +10,7 @@ public class Assets {
 	public static BufferedImage mark1, mark2;
 	public static BufferedImage waffle1;
 	public static BufferedImage table1, table2;
+	public static BufferedImage heart1;
 	
 	public static void load(){
 		SpriteLoader loader = new SpriteLoader();
@@ -29,6 +30,10 @@ public class Assets {
 		
 		Sprite wa1 = new Sprite(loader.load("/Art/Sprites/waffle_regular.png"));
 		
+		Sprite h1 = new Sprite(loader.load("/Art/Sprites/heart.png"));
+		
+		Sprite s1 = new Sprite(loader.load("/Art/Sprites/splat.png"));
+		
 		wood1 = w.crop(0, 0, 36, 32, 36, 32);
 		wood2 = w1.crop(0, 0, 36, 30, 36, 30);
 		wood3 = w2.crop(0, 0, 36, 30, 36, 30);
@@ -44,9 +49,13 @@ public class Assets {
 		player3 = p1.crop(2, 0, 16, 16, 16, 16);
 		player4 = p1.crop(3, 0, 16, 16, 16, 16);
 		
-		//waffle1 = wa1.crop(0, 0, 32, 32, 32, 32);
+		waffle1 = wa1.crop(0, 0, 32, 32, 32, 32);
 		
-		//mark1 = m1.crop(0, 0, 32, 32, 32, 32);
-		//mark2 = m1.crop(1, 0, 32, 32, 32, 32);
+		heart1 = h1.crop(0, 0, 32, 32, 32, 32);
+		
+		splat = s1.crop(0, 0, 32, 32, 32, 32);
+		
+		mark1 = m1.crop(0, 0, 16, 16, 16, 16);
+		mark2 = m1.crop(1, 0, 16, 16, 16, 16);
 	}
 }

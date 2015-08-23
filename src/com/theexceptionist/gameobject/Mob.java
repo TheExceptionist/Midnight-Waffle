@@ -47,4 +47,8 @@ public abstract class Mob extends Entity{
 			}
 		}
 	}
+	
+	public void setDamage(int damage){
+		health -= damage;
+	}
 }

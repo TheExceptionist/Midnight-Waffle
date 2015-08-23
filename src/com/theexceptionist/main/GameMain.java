@@ -9,10 +9,12 @@ import java.awt.image.BufferStrategy;
 import java.util.Random;
 
 import com.theexceptionist.assets.Assets;
-import com.theexceptionist.gameobject.Player;
+import com.theexceptionist.gameobject.GameObject;
 import com.theexceptionist.gameobject.Rug;
 import com.theexceptionist.gameobject.Table;
 import com.theexceptionist.gameobject.WoodTile;
+import com.theexceptionist.gameobject.mob.Mark;
+import com.theexceptionist.gameobject.mob.Player;
 import com.theexceptionist.input.InputHandler;
 
 
@@ -27,6 +29,9 @@ public class GameMain extends Canvas implements Runnable{
 	public static final int GameID = 2;
 	public static final int HelpID = 3;
 	
+	public static int numMarks = 0;
+	public static int marksLim;
+	
 	private int currentChoice = 0;
 	
 	private boolean gen = true;
@@ -35,6 +40,7 @@ public class GameMain extends Canvas implements Runnable{
 	private Handler h = new Handler();
 	private Assets a = new Assets();
 	private Player p;
+	private HUD hud;
 	
 	private Random r = new Random(System.nanoTime());
 	
@@ -62,6 +68,8 @@ public class GameMain extends Canvas implements Runnable{
 		titleFont = new Font("Times New Roman", Font.PLAIN, 40);
 		font = new Font("Arial", Font.PLAIN, 30);
 		titleColor = new Color(255, 0, 0);
+		
+		marksLim = r.nextInt(3);
 		
 		Assets.load();
 	}
@@ -156,6 +164,22 @@ public class GameMain extends Canvas implements Runnable{
 				gen = false;
 				p = new Player("Player", width/2 - 70, height/2 + 50, 16, 16, h, input);
 				h.addObject(p);
+				hud = new HUD(p);
+				
+				while(numMarks == 0){
+					for(int i = 0; i < h.objects.size(); i++){
+						GameObject tempObject = h.objects.get(i);
+						
+						if(tempObject instanceof Table){
+							Table t = (Table) tempObject;
+							
+							if(r.nextInt(100) <= 25 && t.getX() < 256 && t.getY() < 256){
+								h.addObject(new Mark("Mark",t.getX(), t.getY(), 16, 16, h));
+								System.out.println("Hi");
+							}
+						}
+					}
+				}
 			}
 			
 			h.tick();
@@ -216,7 +240,10 @@ public class GameMain extends Canvas implements Runnable{
 			Graphics2D g2d = (Graphics2D) g;
 			
 			g2d.scale(3, 3);
+			
 			h.render(g);
+			
+			hud.render(g);
 		}
 		if(currentState == "Help"){
 			

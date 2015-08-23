@@ -29,11 +29,6 @@ public class Table extends GameObject{
 
 
 	public void render(Graphics g) {
-		g.setColor(Color.red);
-		g.drawRect(x + 5, y + 3, 5, h - 5);
-		//g.drawRect(x + 22, y + 3, 5, h - 5);
-		g.drawRect(x + 6, y, w - 13, h - 20);
-		//g.drawRect(x, y, w, h);
 		if(type == 0){
 			g.drawImage(Assets.table1, x, y, null);	
 		}
@@ -46,7 +41,7 @@ public class Table extends GameObject{
 		if(type == 0){
 			return new Rectangle(x + 5, y + 3, 5, h - 5);
 		}else{
-			return new Rectangle(x + 9, y + 7, 5, h - 15);
+			return new Rectangle(x + 5, y + 11, 5, 10);
 		}
 	}
 	
@@ -54,7 +49,7 @@ public class Table extends GameObject{
 		if(type == 0){
 			return new Rectangle(x + 22, y + 3, 5, h - 5);
 		}else{
-			return new Rectangle(x + 9, y + 7, 5, h - 15);
+			return new Rectangle(x + 22, y + 11, 5, 10);
 		}
 	}
 	
@@ -62,15 +57,23 @@ public class Table extends GameObject{
 		if(type == 0){
 			return new Rectangle(x + 6, y, w - 13, h - 20);
 		}else{
-			return new Rectangle(x + 9, y + 7, 5, h - 15);
+			return new Rectangle(x + 10, y + 8, 10, 5);
 		}
 	}
 	//
 	public Rectangle getBoundsDown() {
 		if(type == 0){
-			return new Rectangle(x + 5, y + 3, 5, h - 5);
+			return new Rectangle(x + 7, y + 20, w - 13, h - 20);
 		}else{
-			return new Rectangle(x + 9, y + 7, 5, h - 15);
+			return new Rectangle(x + 10, y + 20, 10, 5);
 		}
+	}
+	
+	public int getX(){
+		return x;
+	}
+	
+	public int getY(){
+		return y;
 	}
 }
