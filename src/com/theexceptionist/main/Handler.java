@@ -9,7 +9,7 @@ import com.theexceptionist.gameobject.Player;
 import com.theexceptionist.gameobject.WoodTile;
 
 public class Handler {
-	private LinkedList<GameObject> objects = new LinkedList<GameObject>();
+	public LinkedList<GameObject> objects = new LinkedList<GameObject>();
 	private ArrayList<WoodTile> wood = new ArrayList<WoodTile>();
 	
 	public Handler(){

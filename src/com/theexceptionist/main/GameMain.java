@@ -154,7 +154,7 @@ public class GameMain extends Canvas implements Runnable{
 			if(gen){
 				genLevel();
 				gen = false;
-				p = new Player("Player", width/2 - 70, height/2 + 50, 32, 32, h);
+				p = new Player("Player", width/2 - 70, height/2 + 50, 16, 16, h, input);
 				h.addObject(p);
 			}
 			
@@ -224,5 +224,15 @@ public class GameMain extends Canvas implements Runnable{
 		
 		g.dispose();
 		bs.show();
+	}
+	
+	public static int clamp(int var, int min, int max){
+		if(var <= min){
+			return min;
+		}else if(var >= max){
+			return max;
+		}else{
+			return var;
+		}
 	}
 }
