@@ -11,6 +11,7 @@ public class Sprite {
 	
 	public BufferedImage crop(int col, int row, int rowSize, int colSize, int w, int h){
 		//returns cropped out image of the sheet
+		System.out.println(sheet.getHeight()+" "+sheet.getWidth());
 		return sheet.getSubimage(col * colSize, row * rowSize, w, h);
 	}
 	

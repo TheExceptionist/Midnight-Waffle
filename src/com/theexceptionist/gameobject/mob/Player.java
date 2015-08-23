@@ -75,12 +75,16 @@ public class Player extends Mob{
 	}
 	
 	public void toss(int x, int y){
-		han.addObject(new Waffles("Waffle", x + 4, y, 8, 8, han, true));
+		han.addObject(new Waffles("Waffle", x + 4, y, 8, 8, han, 0));
 		numPancakes--;
 	}
 	
 	public int getHealth(){
 		return health;
+	}
+	
+	public void setMoney(int amount){
+		money += amount;
 	}
 	
 	public int getMoney(){

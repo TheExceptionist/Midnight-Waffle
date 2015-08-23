@@ -29,7 +29,8 @@ public class HUD {
 		}
 		
 		g.drawString("Health: ", 7, 330);
-		g.drawString("Money: "+p.getMoney(), 105, 10);
+		g.drawString("Money: "+p.getMoney(), 7, 10);
 		g.drawString("Pancakes: ", 110, 330);
+		g.drawString("Wave: "+GameMain.wave, 220, 10);
 	}
 }

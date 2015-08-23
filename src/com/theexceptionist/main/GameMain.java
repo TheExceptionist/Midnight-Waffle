@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 import java.util.Random;
 
 import com.theexceptionist.assets.Assets;
+import com.theexceptionist.assets.Audio;
 import com.theexceptionist.gameobject.GameObject;
 import com.theexceptionist.gameobject.Rug;
 import com.theexceptionist.gameobject.Table;
@@ -31,6 +32,11 @@ public class GameMain extends Canvas implements Runnable{
 	
 	public static int numMarks = 0;
 	public static int marksLim;
+	public static int gameMarks;
+	
+	public static int wave = 1;
+	public static int waveCount = 0;
+	public static int waveLim;
 	
 	private int currentChoice = 0;
 	
@@ -41,6 +47,7 @@ public class GameMain extends Canvas implements Runnable{
 	private Assets a = new Assets();
 	private Player p;
 	private HUD hud;
+	private Spawner s;
 	
 	private Random r = new Random(System.nanoTime());
 	
@@ -70,8 +77,19 @@ public class GameMain extends Canvas implements Runnable{
 		titleColor = new Color(255, 0, 0);
 		
 		marksLim = r.nextInt(3);
+		waveLim = r.nextInt(2) + 3;
 		
 		Assets.load();
+		
+		loadSounds();
+	}
+	
+	public void loadSounds(){
+		Audio.load("/Sounds/hurt1", "hurt1");
+		Audio.load("/Sounds/hurt2", "hurt2");
+		Audio.load("/Sounds/hurt3", "hurt3");
+		
+		Audio.load("/Sounds/hackerb1", "hackerb1");
 	}
 	
 	public void start(){
@@ -165,6 +183,7 @@ public class GameMain extends Canvas implements Runnable{
 				p = new Player("Player", width/2 - 70, height/2 + 50, 16, 16, h, input);
 				h.addObject(p);
 				hud = new HUD(p);
+				s = new Spawner(h);
 				
 				while(numMarks == 0){
 					for(int i = 0; i < h.objects.size(); i++){
@@ -175,14 +194,17 @@ public class GameMain extends Canvas implements Runnable{
 							
 							if(r.nextInt(100) <= 25 && t.getX() < 256 && t.getY() < 256){
 								h.addObject(new Mark("Mark",t.getX(), t.getY(), 16, 16, h));
-								System.out.println("Hi");
 							}
 						}
 					}
 				}
 			}
-			
+			if(waveCount >= waveLim){
+				waveCount = 0;
+				waveLim += waveLim/2;
+			}
 			h.tick();
+			s.tick();
 		}
 		if(currentState == "Help"){
 			

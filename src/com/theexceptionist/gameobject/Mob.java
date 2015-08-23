@@ -9,8 +9,8 @@ public abstract class Mob extends Entity{
 	protected int health;
 	protected boolean isCollidingR = false;
 	protected boolean isCollidingL = false;
-	protected boolean isCollidingB = false;
-	protected boolean isCollidingT = false;
+	protected boolean isCollidingU = false;
+	protected boolean isCollidingD = false;
 	
 	public Mob(String name, int x, int y, int w, int h, Handler han) {
 		super(name, x, y, w, h, han);
@@ -44,8 +44,26 @@ public abstract class Mob extends Entity{
 				}else{
 					isCollidingR = false;
 				}
+				if(tempObject != this && table.getBoundsUp().intersects(getBounds())){
+					this.dx = 0;
+					isCollidingU = true;
+					break;
+				}else{
+					isCollidingU = false;
+				}
+				if(tempObject != this && table.getBoundsDown().intersects(getBounds())){
+						this.dx = 0;
+						isCollidingD = true;
+						break;
+				}else{
+					isCollidingD = false;
+				}
 			}
 		}
+	}
+	
+	public void setHealth(int amount){
+		health += amount;
 	}
 	
 	public void setDamage(int damage){

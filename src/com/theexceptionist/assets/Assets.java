@@ -4,6 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 	public static BufferedImage wood1, wood2, wood3;
+	public static BufferedImage typeA1, typeAA1, typeA2, typeAA2, typeA3, typeAA3;
+	public static BufferedImage typeB1,typeBB1, typeB2, typeBB2, typeB3, typeBB3;
+	public static BufferedImage typeC1, typeCC1, typeC2, typeCC2, typeC3, typeCC3;
 	public static BufferedImage rug1, rug2;
 	public static BufferedImage splat;
 	public static BufferedImage player1, player2, player3, player4;
@@ -17,6 +20,18 @@ public class Assets {
 		Sprite w = new Sprite(loader.load("/Art/Sprites/wooden_planks_1.png"));
 		Sprite w1 = new Sprite(loader.load("/Art/Sprites/wooden_planks_2.png"));
 		Sprite w2 = new Sprite(loader.load("/Art/Sprites/wooden_planks_3.png"));
+		
+		Sprite a = new Sprite(loader.load("/Art/Sprites/type_a_style_1_sprite.png"));
+		Sprite a1 = new Sprite(loader.load("/Art/Sprites/type_a_style_2_sprite.png"));
+		Sprite a2 = new Sprite(loader.load("/Art/Sprites/type_a_style_3_sprite.png"));
+		
+		Sprite b = new Sprite(loader.load("/Art/Sprites/type_b_style_1_sprite.png"));
+		Sprite b1 = new Sprite(loader.load("/Art/Sprites/type_b_style_2_sprite.png"));
+		Sprite b2 = new Sprite(loader.load("/Art/Sprites/type_b_style_3_sprite.png"));
+		
+		Sprite c = new Sprite(loader.load("/Art/Sprites/type_c_style_1_sprite.png"));
+		Sprite c1 = new Sprite(loader.load("/Art/Sprites/type_c_style_2_sprite.png"));
+		Sprite c2 = new Sprite(loader.load("/Art/Sprites/type_c_style_3_sprite.png"));
 		
 		Sprite r1 = new Sprite(loader.load("/Art/Sprites/rug1.png"));
 		Sprite r2 = new Sprite(loader.load("/Art/Sprites/rug2.png"));
@@ -38,6 +53,33 @@ public class Assets {
 		wood2 = w1.crop(0, 0, 36, 30, 36, 30);
 		wood3 = w2.crop(0, 0, 36, 30, 36, 30);
 		
+		typeC1 = c.crop(0, 0, 16, 16, 16, 16);
+		typeCC1 = c.crop(1, 0, 16, 16, 16, 16);
+		
+		typeC2 = c1.crop(0, 0, 16, 16, 16, 16);
+		typeCC2 = c1.crop(1, 0, 16, 16, 16, 16);
+		
+		typeC3 = c2.crop(0, 0, 16, 16, 16, 16);
+		typeCC3 = c2.crop(1, 0, 16, 16, 16, 16);
+		
+		typeB1 = b.crop(0, 0, 16, 16, 16, 16);
+		typeBB1 = b.crop(1, 0, 16, 16, 16, 16);
+		
+		typeB2 = b1.crop(0, 0, 16, 16, 16, 16);
+		typeBB2 = b1.crop(1, 0, 16, 16, 16, 16);
+		
+		typeB3 = b2.crop(0, 0, 16, 16, 16, 16);
+		typeBB3 = b2.crop(1, 0, 16, 16, 16, 16);
+		
+		typeA1 = a.crop(0, 0, 16, 16, 16, 16);
+		typeAA1 = a.crop(1, 0, 16, 16, 16, 16);
+		
+		typeA2 = a1.crop(0, 0, 16, 16, 16, 16);
+		typeAA2 = a1.crop(1, 0, 16, 16, 16, 16);
+		
+		typeA3 = a2.crop(0, 0, 16, 16, 16, 16);
+		typeAA3 = a2.crop(1, 0, 16, 16, 16, 16);
+		
 		rug1 = r1.crop(0, 0, 32, 32, 32, 32);
 		rug2 = r2.crop(0, 0, 32, 32, 32, 32);
 		
@@ -55,7 +97,7 @@ public class Assets {
 		
 		splat = s1.crop(0, 0, 32, 32, 32, 32);
 		
-		mark1 = m1.crop(0, 0, 16, 16, 16, 16);
-		mark2 = m1.crop(1, 0, 16, 16, 16, 16);
+		mark1 = m1.crop(0, 0, 12, 11, 11, 24);
+		mark2 = m1.crop(1, 0, 12, 11, 11, 24);
 	}
 }

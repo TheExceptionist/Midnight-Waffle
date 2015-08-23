@@ -4,27 +4,42 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import com.theexceptionist.assets.Assets;
+import com.theexceptionist.gameobject.mob.Mark;
 import com.theexceptionist.gameobject.mob.Player;
 import com.theexceptionist.main.Handler;
+import com.theexceptionist.sfx.SplashText;
 import com.theexceptionist.sfx.Splat;
 
 public class Waffles extends Entity{
-	private boolean isPlayer;
+	private int isPlayer;
+	private int coolDown = 0;
 	
-	public Waffles(String name, int x, int y, int w, int h, Handler han, boolean isPlayer) {
+	public Waffles(String name, int x, int y, int w, int h, Handler han, int isPlayer) {
 		super(name, x, y, w, h, han);
 		this.isPlayer = isPlayer;
 	}
 	
 	public void tick(){
 		super.tick();
-		dy = -3;
+		if(coolDown > 0){
+			coolDown--;
+		}
 		
 		for(int i = 0; i < han.objects.size(); i++){
 			GameObject tempObject = han.objects.get(i);
+			if(isPlayer == 0){
+				dy = -3;
+			}else{
+				dy = 3;
+			}
 			
 			if(tempObject != this){
-				if(tempObject instanceof Table){
+				if(tempObject instanceof Mark && (isPlayer == 1 || isPlayer == 0)){
+					if(coolDown <= 0){
+						han.addText(new SplashText("Waffle Ready!!!!", tempObject.x, tempObject.y, han));
+						coolDown = 50;
+					}
+				}else if(tempObject instanceof Table && (isPlayer == 1 || isPlayer == 0)){
 					Table t = (Table) tempObject;
 					if(t.getBoundsUp().intersects(getBounds())){
 						die();
@@ -35,8 +50,8 @@ public class Waffles extends Entity{
 				}else{
 					if(tempObject.getBounds().intersects(getBounds())){
 						if(tempObject instanceof Mob){
-							if(tempObject instanceof Player && isPlayer){
-								System.out.println("Waffle Throw");
+							if(tempObject instanceof Player && (isPlayer == 1 || isPlayer == 0)){
+								han.addText(new SplashText("Waffle Throw!!", tempObject.x, tempObject.y, han));
 							}else{
 								Mob mob = (Mob) tempObject;
 								mob.setDamage(1);	

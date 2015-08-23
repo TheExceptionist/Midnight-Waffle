@@ -21,7 +21,7 @@ public abstract class Entity extends GameObject{
 		y += dy;
 	}
 	
-	public void die(){
+	protected void die(){
 		han.removeObject(this);
 	}
 }
