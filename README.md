@@ -1,2 +1,2 @@
 # Midnight-Waffle
-400, 500, 2
+width: 400,height: 500,scale: 2
