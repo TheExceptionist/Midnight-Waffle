@@ -97,3 +97,9 @@ Horde mode code:
 		han.addText(new SplashText(name+" got damaged: "+damage, x, y, han));
 		health -= damage;
 	}
+
+
+		if(m.getBounds().intersects(getBounds()) && coolDown == 0){
+					m.takeWaffles(attack);
+					coolDown = 100;
+				}
