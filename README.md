@@ -42,13 +42,13 @@ To change:
 
 Horde mode code:
 
-			if(r.nextInt(500 * (GameMain.numMarks / GameMain.wave)) <= 10 * GameMain.waveCount){
+			if(r.nextInt(500 * (GameMain.numMarks / GameMain.wave)) <= 10){
 				HordeMode();
 			}
 			
 				private void HordeMode(){
 		h.addText(new SplashText("Horde Incoming!!!!", 200, -10, h));
-		int numPeople = r.nextInt(10 * (GameMain.numMarks / GameMain.wave)) + 10;
+		int numPeople = r.nextInt(10) + 10;
 		
 		for(int i = 0; i < numPeople; i++){
 			if(r.nextInt(100 * GameMain.wave) <= 5 * GameMain.wave){
@@ -98,8 +98,11 @@ Horde mode code:
 		health -= damage;
 	}
 
+		Waffles bug fix:
 
 		if(m.getBounds().intersects(getBounds()) && coolDown == 0){
 					m.takeWaffles(attack);
 					coolDown = 100;
 				}
+				
+	
