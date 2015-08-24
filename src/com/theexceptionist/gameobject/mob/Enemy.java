@@ -31,6 +31,7 @@ public abstract class Enemy extends Mob{
 	private boolean turnL = false, turnR = false;
 	protected int sec = 0;
 	protected int n = 0;
+	protected int targetX, targetY; 
 	
 	public Enemy(String name, int x, int y, int w, int h, Handler han) {
 		super(name, x, y, w, h, han);
@@ -101,6 +102,38 @@ public abstract class Enemy extends Mob{
 			die();
 		}
 	}
+	
+    protected void wanderThief(){
+		for(int i = 0; i < han.objects.size(); i++){
+		    GameObject tempObject = han.objects.get(i);
+		
+		    if(tempObject instanceof Player){
+		        Player p = (Player) tempObject;
+		
+		        targetX = p.getX();
+		        targetY = p.getY();
+		    }
+		}
+		
+		if(isCollidingU){
+		            int cho = rand.nextInt(2); 
+		    dy = 0;
+		    if(cho == 0){
+		        turnLeft();
+		    }else{
+		        turnRight();
+		    }
+		}else if(x > targetX && x < targetX + 10){
+		    forward();
+		}else if(x < targetX){
+		    turnLeft();
+		}else if(x > targetX){
+		    turnRight();
+		}else{
+		    forward();
+		}
+    }
+	
 	protected void wander(){
 			if(turnL){
 				turning++;
@@ -237,10 +270,10 @@ public abstract class Enemy extends Mob{
 			if(tempObject instanceof Player || tempObject instanceof Mark){
 				Mob m = (Mob) tempObject;
 				
-				if(m.getBounds().intersects(getBounds())){
-					m.takeWaffles(attack);
-					coolDown = 100;
-				}
+			    if(m.getBounds().intersects(getBounds()) && coolDown == 0){
+	                m.takeWaffles(attack);
+	                coolDown = 100;
+	            }
 			}
 		}
 		if(coolDown > 0){

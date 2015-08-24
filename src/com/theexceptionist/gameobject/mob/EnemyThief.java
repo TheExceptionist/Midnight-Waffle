@@ -15,7 +15,7 @@ public class EnemyThief extends Enemy{
 	
 	public void tick(){
 		super.tick();
-		wander();
+		wanderThief();
 		collideThief();
 	}
 	

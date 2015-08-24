@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.theexceptionist.assets.Audio;
 import com.theexceptionist.main.Handler;
+import com.theexceptionist.sfx.SplashText;
 
 public abstract class Mob extends Entity{
 	protected int health;
@@ -75,10 +76,12 @@ public abstract class Mob extends Entity{
 		}else{
 			Audio.play("hurt3");
 		}
+	    han.addText(new SplashText(name+" lost Waffles: "+amount, x, y, han));
 		numPancakes -= amount;
 	}
 	
 	public void setHealth(int amount){
+		  han.addText(new SplashText(name+" got healed: "+amount, x, y, han));
 		health += amount;
 	}
 	
@@ -91,6 +94,7 @@ public abstract class Mob extends Entity{
 		}else{
 			Audio.play("hurt3");
 		}
+	    han.addText(new SplashText(name+" got damaged: "+damage, x, y, han));
 		health -= damage;
 	}
 }
