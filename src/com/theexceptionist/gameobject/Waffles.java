@@ -15,7 +15,7 @@ import com.theexceptionist.sfx.SplashText;
 import com.theexceptionist.sfx.Splat;
 
 public class Waffles extends Entity{
-	private int isPlayer;
+	protected int isPlayer;
 	private int coolDown = 0;
 	private Random r = new Random(System.nanoTime());
 	

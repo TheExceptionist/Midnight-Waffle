@@ -13,7 +13,6 @@ import com.theexceptionist.main.Handler;
 import com.theexceptionist.sfx.SplashText;
 
 public class StunWaffle extends Waffles{
-	private int isPlayer;
 	private int coolDown = 0;
 	private Random r = new Random(System.nanoTime());
 

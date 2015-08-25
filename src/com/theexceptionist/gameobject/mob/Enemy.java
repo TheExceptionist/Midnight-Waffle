@@ -295,14 +295,14 @@ public abstract class Enemy extends Mob{
 				han.addObject(new Waffles("Waffle", x + 4, y, 8, 8, han, 2));
 				numPancakes--;
 			}else{
-				han.addObject(new StunWaffle("Stun Waffle", x + 4, y + 18, 8, 8, han, 2));
+				han.addObject(new StunWaffle("Stun Waffle", x + 4, y, 8, 8, han, 2));
 			}
 		}else{
 			if(type == 0){
 				han.addObject(new Waffles("Waffle", x + 4, y + 32, 8, 8, han, 2));
 				numPancakes--;
 			}else{
-				han.addObject(new StunWaffle("Stun Waffle", x + 4, y + 40, 8, 8, han, 2));
+				han.addObject(new StunWaffle("Stun Waffle", x + 4, y+32, 8, 8, han, 2));
 			}
 		}
 		coolDown1 = 100;
