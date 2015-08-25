@@ -32,3 +32,6 @@ v2.0.0
 -Fixed a spawning bug
 -Fixed a wave-related bug
 
+v2.0.1
+-Thieves steal money
+

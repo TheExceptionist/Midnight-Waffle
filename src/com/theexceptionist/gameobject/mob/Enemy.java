@@ -330,6 +330,10 @@ public abstract class Enemy extends Mob{
 				
 			    if(m.getBounds().intersects(getBounds()) && coolDown == 0){
 	                m.takeWaffles(attack);
+	                if(tempObject instanceof Player){
+	                	Player p = (Player) m;
+	                	p.setMoney(-attack*2);
+	                }
 	                coolDown = 100;
 	            }
 			}
