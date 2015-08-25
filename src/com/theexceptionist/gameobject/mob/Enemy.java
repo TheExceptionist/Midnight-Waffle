@@ -219,6 +219,11 @@ public abstract class Enemy extends Mob{
 					forwardE();
 				}
 			}
+		}else{
+			waitTime++;
+			if(waitTime >= 100){
+				shouldStop = false;
+			}
 		}
 }
 	
@@ -257,9 +262,18 @@ public abstract class Enemy extends Mob{
 				}
 			}
 		}else{
-			waitTime++;
-			if(waitTime >= 100){
+			dx = 0;
+			dy = 0;
+			if(coolDown1 == 0){
+				aim(rand.nextInt(2), false);
+				thrown++;
+			}
+			if(coolDown1 > 0){
+				coolDown1--;
+			}
+			if(thrown >= throwLim){
 				shouldStop = false;
+				thrown = 0;
 			}
 		}
 	}

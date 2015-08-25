@@ -34,4 +34,5 @@ v2.0.0
 
 v2.0.1
 -Thieves steal money
+-Fixed a thrower bug
 
