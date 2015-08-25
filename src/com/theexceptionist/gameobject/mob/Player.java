@@ -7,6 +7,7 @@ import java.util.Random;
 import com.theexceptionist.assets.Assets;
 import com.theexceptionist.assets.Audio;
 import com.theexceptionist.gameobject.Mob;
+import com.theexceptionist.gameobject.StunWaffle;
 import com.theexceptionist.gameobject.Waffles;
 import com.theexceptionist.input.InputHandler;
 import com.theexceptionist.main.GameMain;
@@ -26,7 +27,7 @@ public class Player extends Mob{
 	}
 
 	public void setScore(int score) {
-		this.score = score;
+		this.score += score;
 	}
 
 	private Random rand = new Random(System.nanoTime());
@@ -95,9 +96,17 @@ public class Player extends Mob{
 		
 		if(coolDown == 0){
 			if(i.attack.down && numPancakes > 0){
-				toss(x, y);
+				toss(x, y, false);
+				coolDown = 5;
 			}
-			coolDown = 5;
+			if(i.attackstun.down){
+				toss(x, y, true);
+				coolDown = 50;
+			}
+			if(i.spend.down && money >= 25 && numPancakes < 3){
+				numPancakes++;
+				money -= 25;
+			}
 		}else{
 			coolDown--;
 		}
@@ -115,19 +124,26 @@ public class Player extends Mob{
 		super.die();
 	}
 	
-	public void toss(int x, int y){
-		int r = rand.nextInt(4);
+	public void toss(int x, int y, boolean stun){
+		int r = rand.nextInt(5);
 		if(r == 0){
 			Audio.play("throw1");
 		}else if(r == 1){
 			Audio.play("throw2");
 		}else if(r == 2){
 			Audio.play("throw3");
-		}else{
+		}else if(r == 3){
 			Audio.play("throw4");
+		}else{
+			Audio.play("throw");
 		}
-		han.addObject(new Waffles("Waffle", x + 4, y, 8, 8, han, 0));
-		numPancakes--;
+		
+		if(!stun){
+			han.addObject(new Waffles("Waffle", x + 4, y, 8, 8, han, 0));
+			numPancakes--;
+		}else{
+			han.addObject(new StunWaffle("Stun Waffle", x + 4, y, 8, 8, han, 0));
+		}
 	}
 	
 	public int getHealth(){
@@ -144,5 +160,10 @@ public class Player extends Mob{
 	
 	public int getPancakes(){
 		return numPancakes;
+	}
+
+	public void respawn() {
+		health = 3;
+		score = 0;
 	}
 }

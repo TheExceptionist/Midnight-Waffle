@@ -11,6 +11,7 @@ public class EnemyThief extends Enemy{
 	
 	public EnemyThief(String name, int x, int y, int w, int h, Handler han) {
 		super(name, x, y, w, h, han);
+		money = 25;
 	}
 	
 	public void tick(){

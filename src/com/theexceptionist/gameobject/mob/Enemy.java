@@ -8,6 +8,7 @@ import java.util.Random;
 import com.theexceptionist.assets.Audio;
 import com.theexceptionist.gameobject.GameObject;
 import com.theexceptionist.gameobject.Mob;
+import com.theexceptionist.gameobject.StunWaffle;
 import com.theexceptionist.gameobject.Waffles;
 import com.theexceptionist.main.GameMain;
 import com.theexceptionist.main.Handler;
@@ -22,11 +23,13 @@ public abstract class Enemy extends Mob{
 	private int turnLim;
 	private int coolDown = 0;
 	private int coolDown1 = 0;
-	private int attack;
+	protected int attack;
 	private int thrown = 0, throwLim;
-	private int scoreAmount;
+	protected int money;
+	protected int scoreAmount;
 	private boolean PlayerKill = false;
 	private boolean shouldStop = false;
+	private int waitTime = 0;
 	
 	private boolean turnL = false, turnR = false;
 	protected int sec = 0;
@@ -44,8 +47,21 @@ public abstract class Enemy extends Mob{
 		scoreAmount = rand.nextInt(100)+50 * type;
 		
 		if(rand.nextInt(100) <= 5){
+			int r = rand.nextInt(4);
 			isElite = true;
-			Audio.play("hackerb1");
+			
+			if(r == 0){
+				Audio.play("hackerb1");
+			}else
+			if(r == 1){
+				Audio.play("hacker1");
+			}else
+			if(r == 2){
+				Audio.play("hacker3");
+			}else
+			if(r == 3){
+				Audio.play("elite");
+			}
 			han.addText(new SplashText("Hack Elite Spawned!!!", x, y, han));
 		}
 		if(isElite){
@@ -169,18 +185,18 @@ public abstract class Enemy extends Mob{
 			}
 	}
 	
-	protected void wanderThrower(){
+	protected void wanderE(){
 		if(!shouldStop){
 			if(turnL){
 				turning++;
-				turnLeft();
+				turnLeftE();
 				if(turning >= turnLim){
 					turning = 0;
 					turnL = false;
 				}
 			}else if(turnR){
 				turning++;
-				turnRight();
+				turnRightE();
 				if(turning >= turnLim){
 					turning = 0;
 					turnR = false;
@@ -189,38 +205,66 @@ public abstract class Enemy extends Mob{
 				if(isCollidingU){
 					dy = 0;
 					if(rand.nextInt(2) == 0){
-						turnLeft();
+						turnLeftE();
 					}else{
-						turnRight();
+						turnRightE();
 					}
 				}else if(rand.nextInt(500) <= 1){
 					if(rand.nextInt(2) == 0){
-						turnLeft();
+						turnLeftE();
 					}else{
-						turnRight();
+						turnRightE();
 					}
 				}else{
-					forward();
+					forwardE();
+				}
+			}
+		}
+}
+	
+	protected void wanderThrower(boolean isElite){
+		if(!shouldStop){
+			if(turnL){
+				turning++;
+				turnLeftE();
+				if(turning >= turnLim){
+					turning = 0;
+					turnL = false;
+				}
+			}else if(turnR){
+				turning++;
+				turnRightE();
+				if(turning >= turnLim){
+					turning = 0;
+					turnR = false;
+				}
+			}else{
+				if(isCollidingU){
+					dy = 0;
+					if(rand.nextInt(2) == 0){
+						turnLeftE();
+					}else{
+						turnRightE();
+					}
+				}else if(rand.nextInt(500) <= 1){
+					if(rand.nextInt(2) == 0){
+						turnLeftE();
+					}else{
+						turnRightE();
+					}
+				}else{
+					forwardE();
 				}
 			}
 		}else{
-			dx = 0;
-			dy = 0;
-			if(coolDown1 == 0){
-				aim();
-				thrown++;
-			}
-			if(coolDown1 > 0){
-				coolDown1--;
-			}
-			if(thrown >= throwLim){
+			waitTime++;
+			if(waitTime >= 100){
 				shouldStop = false;
-				thrown = 0;
 			}
 		}
 	}
 	
-	protected void aim(){
+	protected void aim(int type, boolean isElite){
 		int r = rand.nextInt(4);
 		if(r == 0){
 			Audio.play("throw1");
@@ -231,8 +275,22 @@ public abstract class Enemy extends Mob{
 		}else{
 			Audio.play("throw4");
 		}
-		han.addObject(new Waffles("Waffle", x + 4, y, 8, 8, han, 2));
-		numPancakes--;
+		
+		if(!isElite){
+			if(type == 0){
+				han.addObject(new Waffles("Waffle", x + 4, y, 8, 8, han, 2));
+				numPancakes--;
+			}else{
+				han.addObject(new StunWaffle("Stun Waffle", x + 4, y + 18, 8, 8, han, 2));
+			}
+		}else{
+			if(type == 0){
+				han.addObject(new Waffles("Waffle", x + 4, y + 32, 8, 8, han, 2));
+				numPancakes--;
+			}else{
+				han.addObject(new StunWaffle("Stun Waffle", x + 4, y + 40, 8, 8, han, 2));
+			}
+		}
 		coolDown1 = 100;
 	}
 	
@@ -305,11 +363,12 @@ public abstract class Enemy extends Mob{
 							}
 						}
 					}else{
-						p.setMoney(rand.nextInt(25*type)+25);
+						p.setMoney(rand.nextInt(25*type)+money);
 						han.addText(new SplashText("Money Gained!!!!", x, y, han));
 					}
 					
 					p.setScore(scoreAmount);
+					GameMain.waveCount++;
 				}
 			}
 		}
@@ -320,6 +379,26 @@ public abstract class Enemy extends Mob{
 		super.setDamage(amount);
 		if(health == 0 && PlayerHit){
 			PlayerKill = true;
+		}
+	}
+	
+	public void turnLeftE(){
+		dy = 0;
+		dx = 1;
+		turnL = true;
+	}
+	
+	public void turnRightE(){
+		dy = 0;
+		dx = -1;
+		turnR = true;
+	}
+
+	public void forwardE(){
+		dy = 1;
+		dx = 0;
+		if(rand.nextInt(500) <= 5){
+			shouldStop = true;
 		}
 	}
 	
@@ -341,5 +420,9 @@ public abstract class Enemy extends Mob{
 		if(rand.nextInt(500) <= 5){
 			shouldStop = true;
 		}
+	}
+
+	public int getHealth() {
+		return health;
 	}
 }

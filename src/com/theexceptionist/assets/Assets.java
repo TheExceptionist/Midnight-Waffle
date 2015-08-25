@@ -4,16 +4,19 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 	public static BufferedImage wood1, wood2, wood3;
+	public static BufferedImage coderx1, coderx2, coderx3;
 	public static BufferedImage typeA1, typeAA1, typeA2, typeAA2, typeA3, typeAA3;
 	public static BufferedImage typeB1,typeBB1, typeB2, typeBB2, typeB3, typeBB3;
 	public static BufferedImage typeC1, typeCC1, typeC2, typeCC2, typeC3, typeCC3;
 	public static BufferedImage rug1, rug2;
+	public static BufferedImage melite1, melite2;
 	public static BufferedImage splat;
 	public static BufferedImage player1, player2, player3, player4;
-	public static BufferedImage mark1, mark2;
-	public static BufferedImage waffle1;
+	public static BufferedImage mark1, mark2, emark1, emark2, emark3;
+	public static BufferedImage waffle1, waffleP;
 	public static BufferedImage table1, table2;
 	public static BufferedImage heart1;
+	public static BufferedImage stunW;
 	
 	public static void load(){
 		SpriteLoader loader = new SpriteLoader();
@@ -45,9 +48,23 @@ public class Assets {
 		
 		Sprite wa1 = new Sprite(loader.load("/Art/Sprites/waffle_regular.png"));
 		
+		Sprite wp1 = new Sprite(loader.load("/Art/Sprites/pancake_particle.png"));
+		
 		Sprite h1 = new Sprite(loader.load("/Art/Sprites/heart.png"));
 		
 		Sprite s1 = new Sprite(loader.load("/Art/Sprites/splat.png"));
+		
+		Sprite cx = new Sprite(loader.load("/Art/Sprites/coder_x.png"));
+		
+		Sprite me = new Sprite(loader.load("/Art/Sprites/master_elite.png"));
+		
+		Sprite em = new Sprite(loader.load("/Art/Sprites/evil_mark.png"));
+		
+		Sprite sw = new Sprite(loader.load("/Art/Sprites/waffle_cherry.png"));
+		
+		stunW = sw.crop(0, 0, 16, 16, 16, 16);
+		
+		waffleP = wp1.crop(0, 0, 16, 16, 16, 16);
 		
 		wood1 = w.crop(0, 0, 36, 32, 36, 32);
 		wood2 = w1.crop(0, 0, 36, 30, 36, 30);
@@ -55,6 +72,13 @@ public class Assets {
 		
 		typeC1 = c.crop(0, 0, 16, 16, 16, 16);
 		typeCC1 = c.crop(1, 0, 16, 16, 16, 16);
+		
+		melite1 = me.crop(0, 0, 16, 16, 16, 16);
+		melite2 = me.crop(1, 0, 16, 16, 16, 16);
+		
+		coderx1 = cx.crop(0, 0, 16, 16, 16, 16);
+		coderx2 = cx.crop(1, 0, 16, 16, 16, 16);
+		coderx3 = cx.crop(0, 0, 16, 16, 16, 16);
 		
 		typeC2 = c1.crop(0, 0, 16, 16, 16, 16);
 		typeCC2 = c1.crop(1, 0, 16, 16, 16, 16);
@@ -99,5 +123,9 @@ public class Assets {
 		
 		mark1 = m1.crop(0, 0, 12, 11, 11, 24);
 		mark2 = m1.crop(1, 0, 12, 11, 11, 24);
+		
+		emark1 = em.crop(0, 0, 12, 11, 11, 24);
+		emark2 = em.crop(1, 0, 12, 11, 11, 24);
+		emark3 = em.crop(2, 0, 12, 11, 11, 24);
 	}
 }

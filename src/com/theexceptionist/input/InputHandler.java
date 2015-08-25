@@ -43,8 +43,10 @@ public class InputHandler implements KeyListener{
 	public Key left = new Key();
 	public Key right = new Key();
 	public Key attack = new Key();
+	public Key attackstun = new Key();
 	public Key menu = new Key();
 	public Key choose = new Key();
+	public Key spend = new Key();
 	
 	public void releaseAll() {
 		for (int i = 0; i < keys.size(); i++) {
@@ -89,10 +91,12 @@ public class InputHandler implements KeyListener{
 		if (ke.getKeyCode() == KeyEvent.VK_ALT_GRAPH) menu.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_SPACE) attack.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_CONTROL) attack.toggle(pressed);
-		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD0) attack.toggle(pressed);
+		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD0) attackstun.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_INSERT) attack.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_ESCAPE) menu.toggle(pressed); 
 		if (ke.getKeyCode() == KeyEvent.VK_ENTER) choose.toggle(pressed);
+		
+		if (ke.getKeyCode() == KeyEvent.VK_M) spend.toggle(pressed);
 
 		if (ke.getKeyCode() == KeyEvent.VK_X) menu.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_C) attack.toggle(pressed);

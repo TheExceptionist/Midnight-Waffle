@@ -95,7 +95,11 @@ public class GameMain extends Canvas implements Runnable{
 		Audio.load("/Sounds/hurt2.wav", "hurt2");
 		Audio.load("/Sounds/hurt3.wav", "hurt3");
 		
+		Audio.load("/Sounds/elite.wav", "elite");
+		
 		Audio.load("/Sounds/hackerb1.wav", "hackerb1");
+		Audio.load("/Sounds/hacker.wav", "hacker2");
+		Audio.load("/Sounds/hacker3.wav", "hacker3");
 		
 		Audio.load("/Sounds/pancakesfinished.wav", "finished");
 		
@@ -103,6 +107,9 @@ public class GameMain extends Canvas implements Runnable{
 		
 		Audio.load("/Sounds/select.wav", "select");
 		
+		Audio.load("/Sounds/moveselect.wav", "select1");
+		
+		Audio.load("/Sounds/throw.wav", "throw");
 		Audio.load("/Sounds/throw1.wav", "throw1");
 		Audio.load("/Sounds/throw2.wav", "throw2");
 		Audio.load("/Sounds/throw3.wav", "throw3");
@@ -168,12 +175,14 @@ public class GameMain extends Canvas implements Runnable{
 			Audio.stop("theme");
 			if(tickCount >= 5){
 				if(input.up.down) {
+					Audio.play("select1");
 					currentChoice--;
 					if(currentChoice <= -1){
 						currentChoice = 2;
 					}
 				}
 				if(input.down.down) {
+					Audio.play("select1");
 					currentChoice++;
 					if(currentChoice >= 3){
 						currentChoice = 0;
@@ -222,6 +231,7 @@ public class GameMain extends Canvas implements Runnable{
 				}
 			}
 			if(waveCount >= waveLim){
+				wave++;
 				waveCount = 0;
 				waveLim += waveLim/2;
 			}
@@ -231,10 +241,21 @@ public class GameMain extends Canvas implements Runnable{
 				if(input.menu.down){
 					currentState = states[StartID];
 				}
+				if(input.choose.down){
+					p = new Player("Player", 0, 320, 16, 16, h, input);
+					h.addObject(p);
+					hud = new HUD(p);
+					p.respawn();
+					lose = false;
+					currentState = states[GameID];
+				}
 			}
 		}
 		if(currentState == "Help"){
-			
+			if(input.menu.down){
+				Audio.play("select1");
+				currentState = states[StartID];
+			}
 		}
 	}
 
@@ -299,7 +320,12 @@ public class GameMain extends Canvas implements Runnable{
 			hud.render(g);
 		}
 		if(currentState == "Help"){
-			
+			Font f = new Font("Arial", Font.BOLD, 25);
+			g.setColor(Color.green);
+			g.setFont(f);
+			g.drawString("Welcome to Midnight Waffles, in this game you will face an endless horde of hungry coders in order to obtain a high score, (Old School).", 0+7, height/4);
+			g.drawString("The Controls are: Enter to select, space to shoot waffle, wasd or arrow keys to move, Numpad 0 to shoot stun waffle, m to use money to get more waffles.", 0+7, height/3);
+			g.drawString("Enjoy the Game!!!", 0+7, height/3 + 100);
 		}
 		
 		g.dispose();

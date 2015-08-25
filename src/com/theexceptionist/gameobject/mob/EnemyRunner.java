@@ -12,6 +12,7 @@ public class EnemyRunner extends Enemy{
 	public EnemyRunner(String name, int x, int y, int w, int h, Handler han) {
 		super(name, x, y, w, h, han);
 		genType();
+		money = 25;
 	}
 
 	public void tick(){

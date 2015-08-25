@@ -11,11 +11,12 @@ public class EnemyThrower extends Enemy{
 	
 	public EnemyThrower(String name, int x, int y, int w, int h, Handler han) {
 		super(name, x, y, w, h, han);
+		money = 25;
 	}
 	
 	public void tick(){
 		super.tick();
-		wanderThrower();
+		wanderThrower(false);
 		collide();
 	}
 	
@@ -53,5 +54,14 @@ public class EnemyThrower extends Enemy{
 			g.drawImage(Assets.typeCC3, x, y, null);
 			sec = 0;
 		}
+	}
+	
+	public int getPancakes(){
+		return numPancakes;
+	}
+	
+	
+	public void setWaffles(int amount){
+		numPancakes += amount;
 	}
 }

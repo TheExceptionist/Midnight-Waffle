@@ -15,6 +15,9 @@ public abstract class Mob extends Entity{
 	protected boolean isCollidingU = false;
 	protected boolean isCollidingD = false;
 	protected int numPancakes;
+	protected int slowTime = 0;
+	protected boolean isSlow = false;
+	protected int predx, predy;
 	private Random rand = new Random(System.nanoTime());
 	
 	public Mob(String name, int x, int y, int w, int h, Handler han) {
@@ -26,7 +29,11 @@ public abstract class Mob extends Entity{
 	public abstract Rectangle getBounds();
 
 	public void tick() {
-		super.tick();
+		if(isSlow){
+			slowTime--;
+		}else{
+			super.tick();
+		}
 		if(health <= 0){
 			die();
 		}
@@ -64,6 +71,23 @@ public abstract class Mob extends Entity{
 					isCollidingD = false;
 				}
 			}
+			if(tempObject instanceof Rug){
+				if(tempObject.getBounds().intersects(getBounds())){
+					predx = dx;
+					predy = dy;
+					dy *= 2;
+					dx *= 2;
+				}else{
+					dx = predx;
+					dy = predy;
+				}
+			}
+		}
+		if(slowTime <= 0){
+			dx = predx;
+			dy = predy;
+			isSlow = false;
+			slowTime = 1;
 		}
 	}
 	
@@ -83,6 +107,13 @@ public abstract class Mob extends Entity{
 	public void setHealth(int amount){
 		  han.addText(new SplashText(name+" got healed: "+amount, x, y, han));
 		health += amount;
+	}
+	
+	public void stun(int time, boolean isPlayer){
+		predx = dx;
+		predy = dx;
+		isSlow = true;
+		slowTime = time;
 	}
 	
 	public void setDamage(int damage){

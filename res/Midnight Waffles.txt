@@ -1,10 +1,8 @@
 Midnight Waffles 
 
 Future Versions
--More enemies
--Clean the game up
--Better Ai
 -Allies
+-Save Scores
 
 Changelog
 v1.0.0
@@ -13,4 +11,24 @@ v1.0.0
 v1.0.5
 -Changed the thrower's ai
 -Resized everythin
+
+v1.0.7
+-Fixed a minor score bug
+-Added particles
+-Added more sounds
+-Revamp the Game Over Code
+-Added stun Waffles
+-Unstuck the thieves
+
+v2.0.0
+-Added Coder X, Master Elite, and Evil Mark
+-Fixed rendering bug for Master Elite
+-Add a limit to number of enemies onscreen(performance)
+-Fixed a bunch of bugs with the new additions
+-Added a function to money, buy waffles
+-Improved Evil Mark's AI
+-Finally Added Help text
+-Fixed Evil MArk problem
+-Fixed a spawning bug
+-Fixed a wave-related bug
 

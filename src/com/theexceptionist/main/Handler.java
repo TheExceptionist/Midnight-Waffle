@@ -11,6 +11,7 @@ import com.theexceptionist.sfx.SplashText;
 
 public class Handler {
 	public LinkedList<GameObject> objects = new LinkedList<GameObject>();
+	public LinkedList<GameObject> enemy = new LinkedList<GameObject>();
 	public LinkedList<SplashText> text = new LinkedList<SplashText>();
 	private ArrayList<WoodTile> wood = new ArrayList<WoodTile>();
 	
@@ -49,12 +50,15 @@ public class Handler {
 	
 	public void addObject(GameObject o){
 		objects.add(o);
+		if(o instanceof Enemy){
+			enemy.add(o);
+		}
 	}
 	
 	public void removeObject(GameObject o){
 		objects.remove(o);
 		if(o instanceof Enemy){
-			GameMain.waveCount++;
+			enemy.remove(o);
 		}
 	}
 	
