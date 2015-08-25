@@ -1,108 +1,23 @@
 # Midnight-Waffle
-width: 400,height: 500,scale: 2
 
-To change:
-    					Audio.class.getResource(s)
+#Hello, Welcome to the Midnight Waffles Github Page.
+-This game is based on Mark Reiter, who runs the Code Day Chicago event, and his awesome Waffle making skills. He makes his waffles beautifully and he makes them at Midnight.
 
-    	protected int targetX, targetY; 
+#Designing the Game
+-The game was created singlehandedly by me, TheExcepitionist, using Java. The characters, and enemies, were created by Pawel(a guy) and me using Photo Shop and Piskel(http://www.piskelapp.com/). It took a lot (48 hours) of time to think of ideas needed to make it a quality game (What I think is) with a lot of (not implemented yet) items, power ups, and power downs. We had a team of 6, but only 3 people did anything. Those 3 people did a doing a different part of the Project. Sometimes 1 person worked on one part, but then went back to doing their own thing to help the project(never happen), again.
 
-		wanderThief();
-		
-			protected void wanderThief(){
-		for(int i = 0; i < han.objects.size(); i++){
-			GameObject tempObject = han.objects.get(i);
-			
-			if(tempObject instanceof Player){
-				Player p = (Player) tempObject;
-				
-				targetX = p.getX();
-				targetY = p.getY();
-			}
-		}
-		
-		if(isCollidingU){
-					int cho = rand.nextInt(2); 
-			dy = 0;
-			if(cho == 0){
-				turnLeft();
-			}else{
-				turnRight();
-			}
-		}else if(x > targetX && x < targetX + 10){
-			forward();
-		}else if(x < targetX){
-			turnLeft();
-		}else if(x > targetX){
-			turnRight();
-		}else{
-			forward();
-		}
+#Creators of the App
 
-}
+#Head Coder: Kenny Stepney
 
-Horde mode code:
+(Didn't do anything)~~Assisstant Coders: Oscar Luna and Rygar Carvajal~~
 
-			if(r.nextInt(500 * (GameMain.numMarks / GameMain.wave)) <= 10){
-				HordeMode();
-			}
-			
-				private void HordeMode(){
-		h.addText(new SplashText("Horde Incoming!!!!", 200, -10, h));
-		int numPeople = r.nextInt(10) + 10;
-		
-		for(int i = 0; i < numPeople; i++){
-			if(r.nextInt(100 * GameMain.wave) <= 5 * GameMain.wave){
-				h.addObject(new EnemyThief("Nerd Thief", r.nextInt(250), -10, 16, 16, h));
-			}else if(r.nextInt(200 * GameMain.wave) <= 10 * GameMain.wave){
-				h.addObject(new EnemyThrower("Nerd Thrower", r.nextInt(250), -10, 16, 16, h));
-			}else{
-					if(r.nextInt(500) <= 10 * GameMain.waveCount){
-					HordeMode();
-				}
-				h.addObject(new EnemyRunner("Nerd Runner", r.nextInt(250), -10, 16, 16, h));
-			}
-		}
-	}
-	
-	
-	
-	Some more 
-		public void takeWaffles(int amount){
-		int r = rand.nextInt(3);
-		if(r == 0){
-			Audio.play("hurt1");
-		}else if(r == 1){
-			Audio.play("hurt2");
-		}else{
-			Audio.play("hurt3");
-		}
-		han.addText(new SplashText(name+" lost Waffles: "+amount, x, y, han));
-		numPancakes -= amount;
-	}
-	
-	public void setHealth(int amount){
-		han.addText(new SplashText(name+" got healed: "+amount, x, y, han));
-		health += amount;
-	}
-	
-	public void setDamage(int damage){
-		int r = rand.nextInt(3);
-		if(r == 0){
-			Audio.play("hurt1");
-		}else if(r == 1){
-			Audio.play("hurt2");
-		}else{
-			Audio.play("hurt3");
-		}
-		han.addText(new SplashText(name+" got damaged: "+damage, x, y, han));
-		health -= damage;
-	}
+#Character Desgin: Pawel Michalski and Kenny Stepney
 
-		Waffles bug fix:
+#Animation: (didn't do anything)Chris Shannon, Kenny Stepney, and Pawel Nichalski
 
-		if(m.getBounds().intersects(getBounds()) && coolDown == 0){
-					m.takeWaffles(attack);
-					coolDown = 100;
-				}
-				
-	
+#Website Designer: Kyle Koeller
+
+#In loving memory of Mark Reiter
+
+#Who was sad to see Fischer leave Chicago
